@@ -17,7 +17,7 @@ interface IProps {
 const ImageWrapper = styled.div`
 	position: relative;
 
-	&:hover {
+	&:active {
 		& button {
 			opacity: 1;
 		}
