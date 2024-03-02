@@ -15,8 +15,6 @@ interface Props {
 }
 
 const ImageWrapper = styled.div`
-	position: relative;
-
 	&:hover {
 		& button {
 			opacity: 1;
@@ -43,6 +41,10 @@ const ViewButton = styled.button`
 	transition: opacity 0.2s ease-in-out;
 	transform: translate(-50%, -50%);
 	width: 100%;
+
+	@media screen and (min-width: 1290px) {
+		background: none;
+	}
 `;
 
 const Span = styled.span`
@@ -51,6 +53,15 @@ const Span = styled.span`
 	color: white;
 	letter-spacing: 1.5px;
 	font-weight: bold;
+`;
+
+const Container = styled.div`
+	position: relative;
+	@media screen and (min-width: 1290px) {
+		display: flex;
+		justify-content: center;
+		width: calc(20% - 1rem);
+	}
 `;
 
 export default function Image({
@@ -65,7 +76,7 @@ export default function Image({
 }: Props) {
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 	return (
-		<>
+		<Container>
 			<ImageWrapper>
 				<StyledImage src={srcRaw} alt={alt} width={250} height={200} />
 				<ViewButton onClick={() => setIsOpenModal((show) => !show)}>
@@ -85,6 +96,6 @@ export default function Image({
 					/>
 				</Modal>
 			)}
-		</>
+		</Container>
 	);
 }
