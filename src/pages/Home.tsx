@@ -1,11 +1,11 @@
 import Header from "../components/Header";
-import { useApp } from "../contexts/AppContext";
 import { IPhoto } from "../utils/interfaces";
 import styled from "styled-components";
 import Image from "../components/Image";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import Spinner from "../ui/Spinner";
 import { handleScrollForSimulation, simulateFetch } from "../utils/helpers";
+import { useApp } from "../hooks/useApp";
 
 const StyledHome = styled.div`
 	background-color: #ccd3ca;

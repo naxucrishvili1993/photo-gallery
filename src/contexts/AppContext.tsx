@@ -1,10 +1,4 @@
-import React, {
-	ReactNode,
-	createContext,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import React, { ReactNode, createContext, useEffect, useState } from "react";
 import { IPhoto } from "../utils/interfaces";
 import { getPopularPhotos } from "../services/apiPhotos";
 import { extractFields } from "../utils/helpers";
@@ -18,7 +12,7 @@ interface IContext {
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AppContext = createContext<IContext>({
+export const AppContext = createContext<IContext>({
 	history: [],
 	setHistory: () => [],
 	images: [],
@@ -33,17 +27,7 @@ interface IProps {
 
 function AppProvider({ children }: IProps) {
 	const [images, setImages] = useState<IPhoto[]>([]);
-	const [history, setHistory] = useState<string[]>([
-		"Cars",
-		"Home",
-		"Something",
-		"Cars",
-		"Home",
-		"Something",
-		"Cars",
-		"Home",
-		"Something",
-	]);
+	const [history, setHistory] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -69,12 +53,4 @@ function AppProvider({ children }: IProps) {
 	);
 }
 
-function useApp() {
-	const context = useContext(AppContext);
-	if (context === undefined) {
-		throw new Error("AppContext was used outside of AppProvider!");
-	}
-	return context;
-}
-
-export { AppProvider, useApp };
+export { AppProvider };

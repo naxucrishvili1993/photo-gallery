@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useApp } from "../contexts/AppContext";
 import HistoryItem from "../components/HistoryItem";
 import styled from "styled-components";
 import {
@@ -11,6 +10,7 @@ import {
 } from "react";
 import { handleScrollForSimulation, simulateFetch } from "../utils/helpers";
 import Spinner from "../ui/Spinner";
+import { useApp } from "../hooks/useApp";
 
 const StyledHistory = styled.div`
 	background-color: #ccd3ca;
@@ -42,7 +42,7 @@ const ListContainer = styled.div`
 const List = styled.ul`
 	background-color: #eee5e5;
 	border-radius: 5px;
-	width: 70%;
+	width: 90%;
 	max-width: 400px;
 	margin-top: 2rem;
 	font-size: 1.1rem;
@@ -73,6 +73,16 @@ const StyledLink = styled(Link)`
 	}
 `;
 
+const Paragraph = styled.p`
+	margin-top: 1rem;
+	font-size: 20px;
+	background-color: #ccd3ca;
+`;
+
+/**
+ * History ელემენტებს სქროლი უჩნდებათ 300 პიქსელი height-ის შემდეგ.
+ * ელემენტების ჯამური რაოდენობა უნდა იყოს მინიმუმ 6
+ */
 export default function History() {
 	const { history, setHistory } = useApp();
 	const [isLoading, setIsLoading] = useState(false);
@@ -80,12 +90,14 @@ export default function History() {
 	const listRef = useRef<HTMLUListElement | null>(null);
 	// პირველივე "დამატების" მომენტის რერენდერის გარეშე დასაჭერად
 	const countRef = useRef<number>(0);
+	const historyInitialLength = history.length;
 	// ველების წინასწარ გამზადება Listener-ის გადასაცემად
 	const listenerProps = {
 		isLoading,
 		setIsLoading,
 		history,
 		setHistory,
+		historyInitialLength,
 		countRef,
 		listRef,
 	};
@@ -112,21 +124,21 @@ export default function History() {
 				<StyledLink to="/">Go Home</StyledLink>
 			</HeadingWrapper>
 			<ListContainer>
-				<List ref={listRef}>
-					{history.length > 0 ? (
-						history?.map((el: string, idx: number) => (
+				{history.length > 0 ? (
+					<List ref={listRef}>
+						{history?.map((el: string, idx: number) => (
 							<HistoryItem
 								key={idx}
 								text={el}
 								currentIndex={idx}
 								length={history.length}
 							/>
-						))
-					) : (
-						<p>There is no search history...</p>
-					)}
-					{isLoading && <Spinner />}
-				</List>
+						))}
+						{isLoading && <Spinner />}
+					</List>
+				) : (
+					<Paragraph>There is no search history...</Paragraph>
+				)}
 			</ListContainer>
 		</StyledHistory>
 	);
@@ -137,14 +149,17 @@ interface IListener {
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	history: string[];
 	setHistory: React.Dispatch<React.SetStateAction<string[]>>;
+	historyInitialLength: number;
 	countRef: MutableRefObject<number>;
 	listRef: RefObject<HTMLUListElement>;
 }
+
 function containerListener({
 	isLoading,
 	setIsLoading,
 	history,
 	setHistory,
+	historyInitialLength,
 	countRef,
 	listRef,
 }: IListener) {
@@ -155,7 +170,7 @@ function containerListener({
 				cb: () =>
 					setHistory((prevHistory: string[]) => [
 						...prevHistory,
-						...history.slice(0, 3),
+						...history.slice(0, historyInitialLength),
 					]),
 				ref: countRef,
 			}),
