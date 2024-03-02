@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import { ICache, IPhoto } from "./interfaces";
 
 export function extractFields(images: IPhoto[]) {
@@ -59,6 +60,54 @@ export function updateStorage({
 	} else {
 		localStorage.setItem("cache", JSON.stringify([{ topic, value: images }]));
 	}
+}
+
+export function handleScrollForSimulation(
+	cb: () => void,
+	isLoading: boolean,
+	countRef: React.MutableRefObject<number>,
+	elementRef: RefObject<HTMLUListElement> | null = null
+) {
+	if (!elementRef) {
+		const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+		const bottom = scrollTop + clientHeight;
+		if (bottom >= scrollHeight - 20 && !isLoading) {
+			countRef.current++;
+			if (countRef.current <= 1) {
+				return cb();
+			}
+		}
+		return;
+	}
+
+	const element = elementRef.current;
+	if (!element) return;
+	const { scrollTop, clientHeight, scrollHeight } = element;
+	const bottom = scrollTop + clientHeight;
+	if (bottom >= scrollHeight - 5 && !isLoading) {
+		countRef.current++;
+		if (countRef.current <= 1) {
+			return cb();
+		}
+	}
+	return;
+}
+
+export function simulateFetch({
+	setState,
+	cb,
+	ref,
+}: {
+	setState: React.Dispatch<React.SetStateAction<boolean>>;
+	cb: () => void;
+	ref: React.MutableRefObject<number>;
+}) {
+	setState(true);
+	setTimeout(() => {
+		cb();
+		setState(false);
+		ref.current = 0;
+	}, 1000);
 }
 
 export const capitalizeFirstLetter = (str: string): string =>

@@ -33,7 +33,17 @@ interface IProps {
 
 function AppProvider({ children }: IProps) {
 	const [images, setImages] = useState<IPhoto[]>([]);
-	const [history, setHistory] = useState<string[]>([]);
+	const [history, setHistory] = useState<string[]>([
+		"Cars",
+		"Home",
+		"Something",
+		"Cars",
+		"Home",
+		"Something",
+		"Cars",
+		"Home",
+		"Something",
+	]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	useEffect(() => {

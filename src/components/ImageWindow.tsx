@@ -28,7 +28,6 @@ export default function ImageWindow({
 	likes,
 	downloads,
 }: IProps) {
-	console.log(downloads);
 	return (
 		<div>
 			<Image src={src} alt={alt} />

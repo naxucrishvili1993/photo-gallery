@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Modal from "../ui/Modal";
 import ImageWindow from "./ImageWindow";
 
-interface IProps {
+interface Props {
 	srcRaw: string;
 	srcFull: string;
 	alt: string;
@@ -62,7 +62,7 @@ export default function Image({
 	views,
 	likes,
 	downloads,
-}: IProps) {
+}: Props) {
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 	return (
 		<>
