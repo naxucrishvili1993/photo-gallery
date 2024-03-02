@@ -17,7 +17,7 @@ interface Props {
 const ImageWrapper = styled.div`
 	position: relative;
 
-	&:active {
+	&:hover {
 		& button {
 			opacity: 1;
 		}
