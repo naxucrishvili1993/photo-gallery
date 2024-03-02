@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import SearchBar from "../ui/SearchBar";
 import { apiPhotos } from "../services/apiPhotos";
-import { useApp } from "../contexts/AppContext";
 import { capitalizeFirstLetter, updateStorage } from "../utils/helpers";
 import { IPhoto } from "../utils/interfaces";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useApp } from "../hooks/useApp";
 
 const StyledHeader = styled.header`
 	align-items: center;
@@ -46,7 +46,7 @@ export default function Header() {
 		updateStorage({ topic, images });
 
 		if (!history.includes(capitalizeFirstLetter(topic))) {
-			setHistory((prevHistory) => [
+			setHistory((prevHistory: string[]) => [
 				...prevHistory,
 				capitalizeFirstLetter(topic),
 			]);
