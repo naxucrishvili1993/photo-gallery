@@ -24,6 +24,7 @@ const ImageWrapper = styled.div`
 
 const StyledImage = styled.img`
 	object-fit: cover;
+	background-color: #d7edf4ad;
 `;
 
 const ViewButton = styled.button`
@@ -78,7 +79,13 @@ export default function Image({
 	return (
 		<Container>
 			<ImageWrapper>
-				<StyledImage src={srcRaw} alt={alt} width={250} height={200} />
+				<StyledImage
+					src={srcRaw}
+					alt={alt}
+					width={250}
+					height={200}
+					loading="lazy"
+				/>
 				<ViewButton onClick={() => setIsOpenModal((show) => !show)}>
 					<Span>View</Span>
 				</ViewButton>
