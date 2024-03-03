@@ -80,7 +80,7 @@ export default function Image({
 		<Container>
 			<ImageWrapper>
 				<StyledImage
-					src={srcRaw}
+					src={srcRaw + "&q=1&auto=format"}
 					alt={alt}
 					width={250}
 					height={200}

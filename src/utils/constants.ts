@@ -1,4 +1,4 @@
-export const FETCH_URL: string = "https://api.unsplash.com/photos/random";
+export const FETCH_URL: string = "https://api.unsplash.com/photos";
 /**
  * შეგნებულად არაა გასაღები შენახული .env ფაილში
  * მიზანია ყველას თავისუფლად ჰქონდეს წვდომა აპლიკაციაზე.

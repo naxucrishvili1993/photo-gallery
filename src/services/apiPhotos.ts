@@ -22,7 +22,7 @@ export async function apiPhotos({ topic }: { topic: string }) {
 
 export async function getPopularPhotos() {
 	const res = await fetch(
-		`${FETCH_URL}?count=20&order_by=popular&client_id=${UNSPLASH_ACCESS_KEY}`
+		`${FETCH_URL}?page=1&per_page=20&order_by=popular&client_id=${UNSPLASH_ACCESS_KEY}`
 	);
 	const images: IPhoto[] = await res.json();
 
